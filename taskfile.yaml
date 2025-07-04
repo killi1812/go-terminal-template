@@ -1,0 +1,41 @@
+version: "3"
+
+vars:
+  BINARY_DIR: ./
+  # TODO: check how dynamic variables work https://taskfile.dev/reference/schema/#variable
+  DYNAMIC:
+    sh: echo "dynamic"
+
+tasks:
+  default:
+    cmds:
+      - task: list-tools
+    silent: false
+
+  build:
+    description: build project binary
+    cmds:
+      - cmd: mkdir -p {{.BINARY_DIR}}
+      - cmd: go build {{.BINARY_DIR}}
+    silent: true
+
+  install:
+    description: install project as your local binary
+    # TODO: Implement
+    silent: true
+
+  test:
+    description: run project tests
+    # TODO: Implement
+    silent: true
+
+  coverage:
+    description: creates project coverage file
+    silent: true
+
+  list-tools:
+    cmds:
+      - go version
+      - gcc --version
+      - task --version
+    silent: true
