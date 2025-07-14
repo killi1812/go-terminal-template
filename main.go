@@ -1,23 +1,25 @@
 package main
 
-import "github.com/killi1812/go-terminal-template/util/cmd"
+import (
+	"context"
+	"flag"
+	"os"
+
+	"github.com/google/subcommands"
+	"github.com/killi1812/go-terminal-template/app"
+	"github.com/killi1812/go-terminal-template/cmd/version"
+)
+
+func init() {
+	app.Setup()
+
+	subcommands.Register(subcommands.HelpCommand(), "")
+	subcommands.Register(&version.VersionCmd{}, "")
+
+	flag.Parse()
+}
 
 func main() {
-	println("Bokic")
-
-	var str string
-	var br int
-	cmd.Setup([]cmd.Flag{
-		{
-			Ptr:     &str,
-			Name:    "Test",
-			Message: "Test message",
-		},
-		{
-			Ptr:          &br,
-			DefaultValue: 1,
-			Name:         "Test2",
-			Message:      "Test message",
-		},
-	})
+	ctx := context.Background()
+	os.Exit(int(subcommands.Execute(ctx)))
 }
